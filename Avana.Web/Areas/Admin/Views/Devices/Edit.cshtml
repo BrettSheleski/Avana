@@ -1,0 +1,11 @@
+﻿@model FVTC.LearningInnovations.Web.Mvc.ViewModel<Avana.Models.Operations.Devices.EditDeviceModel>
+
+@if (Model.OperationModel.Device.Id.HasValue)
+{
+    <h2>Edit @Html.DisplayFor(m => m.OperationModel.Device.MacAddress)</h2>
+}
+else
+{
+    <h2>Create new Device</h2>
+}
+

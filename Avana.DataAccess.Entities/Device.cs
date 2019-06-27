@@ -1,4 +1,5 @@
 ﻿using Avana.DataAccess.Entities.Schema;
+using FVTC.LearningInnovations.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Avana.DataAccess.Entities
 {
     [Table(nameof(device))]
-    public class Device
+    public class Device : IEntity<int>
     {
         [Key]
         [Column(nameof(device.device_id))]
@@ -27,7 +28,8 @@ namespace Avana.DataAccess.Entities
 
         [Required]
         [Column(nameof(device.mac_address))]
-        public ulong MacAddress { get; set; }
+        [MaxLength(6)]
+        public byte[] MacAddress { get; set; }
         
     }
 

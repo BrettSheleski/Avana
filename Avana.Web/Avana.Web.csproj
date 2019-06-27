@@ -6,13 +6,17 @@
 
   <ItemGroup>
     <PackageReference Include="FVTC.LearningInnovations.App.Web.MvcCore" Version="1.0.0.3" />
+    <PackageReference Include="FVTC.LearningInnovations.DataAccess.EntityFrameworkCore" Version="1.0.0.2" />
+    <PackageReference Include="FVTC.LearningInnovations.Json.Newtonsoft" Version="1.0.0" />
     <PackageReference Include="FVTC.LearningInnovations.Web.MvcCore" Version="1.0.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.11" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Avana.DataAccess.Core\Avana.DataAccess.Core.csproj" />
     <ProjectReference Include="..\Avana.Services\Avana.Services.csproj" />
     <ProjectReference Include="..\Avana\Avana.csproj" />
   </ItemGroup>
@@ -24,6 +28,15 @@
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Admin\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

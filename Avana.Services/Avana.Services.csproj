@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Avana.DataAccess.Entities\Avana.DataAccess.Entities.csproj" />
     <ProjectReference Include="..\Avana\Avana.csproj" />
   </ItemGroup>
 

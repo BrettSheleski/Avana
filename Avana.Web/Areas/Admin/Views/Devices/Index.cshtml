@@ -1,0 +1,21 @@
+﻿@model FVTC.LearningInnovations.Web.Mvc.ViewModel<Avana.Models.Operations.Devices.ListDevicesModel>
+
+<h1>Devices</h1>
+<a href="@(Url.Action<DevicesController>(c => c.New()))" class="btn btn-primary">Create Device</a>
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Mac Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var device in Model.OperationModel.Devices)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => device.Id)</td>
+                <td>@Html.DisplayFor(m => device.MacAddress)</td>
+            </tr>
+        }
+    </tbody>
+</table>

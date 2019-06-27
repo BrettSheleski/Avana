@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Avana.DataAccess.Core;
 using FVTC.LearningInnovations.App;
+using FVTC.LearningInnovations.App.Web.MvcCore;
+using FVTC.LearningInnovations.DataAccess;
+using FVTC.LearningInnovations.Factory;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -32,8 +38,27 @@ namespace Avana.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            SqliteConnectionStringBuilder connectionBuilder = new SqliteConnectionStringBuilder
+            {
+                DataSource = "mydb.db"
+            };
 
-            services.AddTransient<IGetModelService<Avana.Models.DeviceIndex>, Avana.Services.DeviceIndexService>();
+            services.AddEntityFrameworkSqlite().AddDbContext<Avana.DataAccess.Core.MyDbContext>(options => options.UseSqlite(connectionBuilder.ConnectionString));
+
+            DbContextOptionsBuilder<MyDbContext> optionsBuilder = new DbContextOptionsBuilder<MyDbContext>();
+
+            optionsBuilder.UseSqlite(connectionBuilder.ConnectionString);
+
+            using (var dbContext = new MyDbContext(optionsBuilder.Options))
+            {
+                dbContext.Database.EnsureCreated();
+            }
+
+            services.AddScoped<DbContext, MyDbContext>();
+            services.AddScoped<IDataAccessService, FVTC.LearningInnovations.DataAccess.EntityFrameworkCore.DataAccessService>();
+            services.AddSingleton<IFactory, FVTC.LearningInnovations.Factory.ActivatorFactory>();
+
+            services.RegisterModelServices(typeof(Avana.Services.DeviceInfoService).Assembly);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -51,11 +76,14 @@ namespace Avana.Web
                 app.UseHsts();
             }
 
-            
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            
+            
+            
 
             app.UseMvc(routes =>
             {
@@ -89,6 +117,7 @@ namespace Avana.Web
 
 
             });
+
         }
     }
 }

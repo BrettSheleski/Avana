@@ -6,7 +6,7 @@ namespace Avana.DataAccess.Core
 {
     public class MyDbContext : DbContext
     {
-        public MyDbContext(DbContextOptions<MyDbContext> options): base(options)
+        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
 
         }
